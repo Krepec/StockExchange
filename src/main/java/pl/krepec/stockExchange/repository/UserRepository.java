@@ -1,8 +1,9 @@
-package pl.krepec.stockExchange;
+package pl.krepec.stockExchange.repository;
 
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import pl.krepec.stockExchange.repository.model.UserDAO;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserDAO, Integer> {

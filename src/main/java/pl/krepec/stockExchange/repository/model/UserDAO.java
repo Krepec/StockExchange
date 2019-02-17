@@ -1,23 +1,28 @@
-package pl.krepec.stockExchange;
+package pl.krepec.stockExchange.repository.model;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users")
+public class UserDAO {
 
-public class UserDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Integer id;
 
-
-    private int id;
+    @Column(name = "username")
     private String userName;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "cash")
     private Double cash;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUserName() {
@@ -44,21 +49,22 @@ public class UserDTO {
         this.cash = cash;
     }
 
-    public UserDTO(String userName, String password, Double cash) {
+    public UserDAO(String userName, String password, Double cash) {
         this.userName = userName;
         this.password = password;
         this.cash = 10000.0;
     }
 
-    public UserDTO(Integer id, String userName, String password, Double cash) {
+    public UserDAO(Integer id, String userName, String password, Double cash) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.cash = 10000.0;
     }
 
-    public UserDTO() {
+    public UserDAO() {
     }
 
 
 }
+
