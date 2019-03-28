@@ -49,6 +49,16 @@ public class PortfolioDTO {
         this.stockCurrentPrice = stockCurrentPrice;
     }
 
+    public PortfolioDTO(String stockSymbol, Double stockCurrentPrice) {
+        this.stockSymbol = stockSymbol;
+        this.stockCurrentPrice = stockCurrentPrice;
+    }
+
     public PortfolioDTO() {
+    }
+
+    @Override
+    public String toString() {
+        return "Stock Symbol: " + stockSymbol + "\nLatest Price: " + stockCurrentPrice;
     }
 }

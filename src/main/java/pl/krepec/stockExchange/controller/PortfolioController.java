@@ -12,6 +12,16 @@ public class PortfolioController {
     @Autowired
     private PortfolioService portfolioService;
 
+    @GetMapping("/stockinfo/{symbol}")
+    public PortfolioDTO getStockInfoFromURL(@PathVariable("symbol") String symbol){
+        return portfolioService.getStockInfoFromURL(symbol);
+    }
+
+    @GetMapping("/stockinfo/")
+    public PortfolioDTO getStockInfoFromURL1(@RequestParam(required = true, value = "symbol") String symbol){
+        return portfolioService.getStockInfoFromURL(symbol);
+    }
+
     @GetMapping("/{id}")
     public PortfolioDTO fingById(@PathVariable("id") Integer id){
         return  portfolioService.findById(id);

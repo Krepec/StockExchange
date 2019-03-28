@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>Get information by stock symbol</title>
+</head>
+<body>
+
+<h2>Stock informations</h2>
+
+<form action="http://localhost:8080/portfolio/stockinfo/" >
+    Put stock symbol:<br>
+    <input type="text" name="symbol">
+    <br>
+
+    <p>Stock symbol: <span id="outputSymbol"> </span><br>
+       Latest price:  <span id="outputPrice"> </span>
+    </p>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
