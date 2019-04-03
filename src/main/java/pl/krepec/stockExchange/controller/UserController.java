@@ -6,7 +6,7 @@ import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

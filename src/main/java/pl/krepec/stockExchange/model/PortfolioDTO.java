@@ -3,11 +3,8 @@ package pl.krepec.stockExchange.model;
 public class PortfolioDTO {
 
    private Integer id;
-
    private String stockSymbol;
-
    private Integer numberOfShares;
-
    private Double stockCurrentPrice;
 
     public Integer getId() {

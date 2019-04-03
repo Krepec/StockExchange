@@ -27,7 +27,7 @@ public class App {
 
 
 
-    Desktop.getDesktop().open(new File("/home/jerzyn/Desktop/Java Projects/StockExchange/src/main/java/pl/krepec/stockExchange/view/index.html"));
+   // Desktop.getDesktop().open(new File("/home/jerzyn/Desktop/Java Projects/StockExchange/src/main/java/pl/krepec/stockExchange/view/index.html"));
 
     SpringApplication.run(App.class, args);
 
