@@ -6,4 +6,5 @@ import pl.krepec.stockExchange.repository.model.HistoryDAO;
 
 @Repository
 public interface HistoryRepository extends CrudRepository<HistoryDAO, Integer> {
+
 }

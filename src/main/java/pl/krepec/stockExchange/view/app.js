@@ -1,6 +1,9 @@
 document.getElementById('Submit').addEventListener("click", readJSON);
+document.getElementById('Check').addEventListener("click", checkUserNameExist);
 
-function readJSON(e){
+
+
+function readJSON(){
     const xhr = new XMLHttpRequest();
 
     stockSymbol = document.getElementById("stockSymbol").value;
@@ -20,5 +23,30 @@ function readJSON(e){
         } 
     }
     xhr.send();
+
 }
+
+function checkUserNameExist(){
+const xhr = new XMLHttpRequest();
+
+userName = document.getElementById("userName").value;
+xhr.withCredentials = true;
+xhr.open('GET', "http://localhost:8080/user/check/?name="+userName ,true);
+
+  xhr.onload = function(){
+        if(this.status === 200){
+            console.log(this.responseText)
+            const result = JSON.parse(this.responseText)
+            
+            if(result === "true")
+            alert("User name exist, choose another one")
+            else
+            alert("User name dont exist")
+
+        }
+    }
+    xhr.send();
+
+}
+
 
