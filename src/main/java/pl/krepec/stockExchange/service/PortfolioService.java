@@ -1,6 +1,5 @@
 package pl.krepec.stockExchange.service;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.krepec.stockExchange.model.PortfolioDTO;
@@ -23,9 +22,8 @@ public class PortfolioService {
     public PortfolioDTO getStockInfoFromURL(String symbol) {
         String url = "https://api.iextrading.com/1.0/stock/"+ symbol +"/quote";
         String jsonString = json.readUrl(url);
-        PortfolioDTO jsonObject = json.parseJson(jsonString);
 
-        return jsonObject;
+        return json.parseJson(jsonString);
 
     }
 

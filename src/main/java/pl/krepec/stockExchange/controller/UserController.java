@@ -2,7 +2,6 @@ package pl.krepec.stockExchange.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.krepec.stockExchange.model.Account;
 import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.repository.model.UserDAO;
 import pl.krepec.stockExchange.service.UserService;
@@ -16,7 +15,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    Account signIn = new Account();
 
     @GetMapping("/{id}")
     public UserDTO findUserById(@PathVariable("id") Integer id) {
@@ -28,9 +26,9 @@ public class UserController {
         return userService.finadAllUsers();
     }
 
-    @GetMapping(value = "/check/")
-    public Boolean checkUserExist(@RequestParam String name) {
-        return signIn.checkUserNameExist(name);
+    @GetMapping(value = "/check")
+    public Boolean checkUserExist(@RequestParam(required = true,value = "username") String userName) {
+        return userService.checkUserNameExist(userName);
 
     }
 
@@ -38,8 +36,5 @@ public class UserController {
     public Integer addNewUser(@RequestBody UserDTO userDTO) {
         return userService.addNewUser(userDTO);
     }
-
-
-
 
 }
