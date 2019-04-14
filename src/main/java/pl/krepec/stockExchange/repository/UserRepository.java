@@ -8,8 +8,7 @@ import pl.krepec.stockExchange.repository.model.UserDAO;
 @Repository
 public interface UserRepository extends CrudRepository<UserDAO, Integer> {
 
- UserDAO findByUserName(String name);
-
-
+    UserDAO findByUserName(String name);
+    UserDAO findByUserNameAndPassword(String userName, String password);
 
 }

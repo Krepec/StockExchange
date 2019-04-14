@@ -9,7 +9,7 @@ import pl.krepec.stockExchange.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/stockexchange/user")
 public class UserController {
 
     @Autowired
@@ -30,6 +30,12 @@ public class UserController {
     public Boolean checkUserExist(@RequestParam(required = true,value = "username") String userName) {
         return userService.checkUserNameExist(userName);
 
+    }
+
+    @GetMapping("/login")
+    private UserDTO login(@RequestParam (required = true, value = "username") String userName,
+                          @RequestParam (required = true , value = "password") String password){
+        return userService.findByUserNameAndPassword(userName, password);
     }
 
     @PostMapping(value = "/register", consumes = "application/json")

@@ -7,7 +7,7 @@ import pl.krepec.stockExchange.repository.model.HistoryDAO;
 import pl.krepec.stockExchange.service.HistoryService;
 
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/stockexchange/history")
 public class HistoryController {
 
     @Autowired
@@ -21,7 +21,6 @@ public class HistoryController {
 
     @GetMapping("/history")
     public Iterable<HistoryDAO> getAllHistory(){
-    Iterable<HistoryDAO> historyDTOList = historyService.getAllHistory();
-    return historyDTOList;
+        return historyService.getAllHistory();
     }
 }

@@ -27,11 +27,12 @@ function readJSON(){
 }
 
 function checkUserNameExist(){
+
 const xhr = new XMLHttpRequest();
 
 userName = document.getElementById("userName").value;
 xhr.withCredentials = true;
-xhr.open('GET', "http://localhost:8080/user/check/?name="+userName ,true);
+xhr.open('GET', "http://localhost:8080/user/check?username="+userName ,true);
 
   xhr.onload = function(){
         if(this.status === 200){
@@ -48,5 +49,6 @@ xhr.open('GET', "http://localhost:8080/user/check/?name="+userName ,true);
     xhr.send();
 
 }
+
 
 

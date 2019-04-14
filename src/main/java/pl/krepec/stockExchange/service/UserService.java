@@ -34,9 +34,20 @@ public class UserService {
     }
 
     public Boolean checkUserNameExist(String userName) {
-
+        Boolean result = null;
         UserDAO userDAO = userRepository.findByUserName(userName);
         UserDTO userDTO = mapUser(userDAO);
+
         return userDTO.getUserName().equals(userName);
+    }
+
+    public UserDTO findByUserNameAndPassword(String userName, String password) {
+
+        UserDAO userDAO = userRepository.findByUserNameAndPassword(userName, password);
+        if (userDAO.getUserName().equals(userName) & userDAO.getPassword().equals(password)) {
+            mapUser(userDAO);
+            return mapUser(userDAO);
+        } else System.out.println("Login failed, chech user name and password");
+        return null;
     }
 }
