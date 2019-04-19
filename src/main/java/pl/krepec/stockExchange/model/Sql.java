@@ -12,10 +12,10 @@ private  List<String> userNameList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gielda", "root","1234");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select "+ columnName + " from " +tableName+"");
+            ResultSet resultSet = statement.executeQuery("select "+ columnName + " from " +tableName+" where username='lol' and password = 'lol'");
 
             while (resultSet.next()){
-                userNameList.add(resultSet.getString("username"));
+                userNameList.add(resultSet.getString("cash"));
 
             }
            statement.close();

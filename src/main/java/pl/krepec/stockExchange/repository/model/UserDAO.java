@@ -20,7 +20,6 @@ public class UserDAO {
     @Column(name = "cash")
     private Double cash;
 
-
     public Integer getId() {
         return id;
     }

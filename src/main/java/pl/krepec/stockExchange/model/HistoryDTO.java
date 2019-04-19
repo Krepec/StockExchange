@@ -10,6 +10,7 @@ public class HistoryDTO {
     private Double stock_price;
     private Date operation_date;
 
+
     public int getId() {
         return id;
     }

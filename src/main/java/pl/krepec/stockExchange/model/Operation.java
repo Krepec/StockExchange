@@ -1,4 +1,4 @@
-package pl.krepec.stockExchange;
+package pl.krepec.stockExchange.model;
 
 public enum Operation {
 

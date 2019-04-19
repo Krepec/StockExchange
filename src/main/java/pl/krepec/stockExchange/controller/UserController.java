@@ -12,6 +12,8 @@ import java.util.List;
 @RequestMapping("/stockexchange/user")
 public class UserController {
 
+    private Boolean result;
+
     @Autowired
     private UserService userService;
 
@@ -28,8 +30,15 @@ public class UserController {
 
     @GetMapping(value = "/check")
     public Boolean checkUserExist(@RequestParam(required = true,value = "username") String userName) {
-        return userService.checkUserNameExist(userName);
 
+        try {
+            return userService.checkUserNameExist(userName);
+        }
+        catch (NullPointerException e){
+            System.out.println("User name don't exist");
+        }
+
+        return false;
     }
 
     @GetMapping("/login")

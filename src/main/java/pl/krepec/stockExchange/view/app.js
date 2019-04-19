@@ -2,7 +2,6 @@ document.getElementById('Submit').addEventListener("click", readJSON);
 document.getElementById('Check').addEventListener("click", checkUserNameExist);
 
 
-
 function readJSON(){
     const xhr = new XMLHttpRequest();
 
@@ -31,18 +30,24 @@ function checkUserNameExist(){
 const xhr = new XMLHttpRequest();
 
 userName = document.getElementById("userName").value;
-xhr.withCredentials = true;
-xhr.open('GET', "http://localhost:8080/user/check?username="+userName ,true);
+
+xhr.open('GET', "http://localhost:8080/stockexchange/user/check?username="+userName ,true);
+
+xhr.setRequestHeader('Access-Control-Allow-Origin','http://localhost:8080/');
+xhr.setRequestHeader('Content-type','application/json');
+xhr.setRequestHeader('Access-Control-Allow-Methods','GET');
 
   xhr.onload = function(){
         if(this.status === 200){
             console.log(this.responseText)
             const result = JSON.parse(this.responseText)
-            
-            if(result === "true")
+            const equal = result == "true"
+            console.log(typeof result)
+            console.log(typeof equal)
+            if(result)
             alert("User name exist, choose another one")
             else
-            alert("User name dont exist")
+            alert("User name don't exist")
 
         }
     }
