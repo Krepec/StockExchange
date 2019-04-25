@@ -47,11 +47,4 @@ public class Market {
 
 
 
-//    public String get
-//    public void addHistory(){
-//
-//    }
-
-
-
 }
