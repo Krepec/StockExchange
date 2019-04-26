@@ -47,7 +47,7 @@ public class UserController {
         return userService.findByUserNameAndPassword(userName, password);
     }
 
-    @PostMapping(value = "/register", consumes = "application/json")
+    @PostMapping(value = "/user", consumes = "application/json")
     public Integer addNewUser(@RequestBody UserDTO userDTO) {
         return userService.addNewUser(userDTO);
     }

@@ -2,6 +2,8 @@ document.getElementById('Submit').addEventListener("click", readJSON);
 document.getElementById('Check').addEventListener("click", checkUserNameExist);
 document.getElementById('Login').addEventListener("click", logIn);
 document.getElementById('AddNewUser').addEventListener("click", addNewUser);
+document.getElementById('Buy').addEventListener("click", addHistory);
+
 
 
 function readJSON(){
@@ -44,8 +46,12 @@ xhr.setRequestHeader('Access-Control-Allow-Methods','GET');
   xhr.onload = function(){
         if(this.status === 200){
             console.log(this.responseText);
-            const userInfo = JSON.parse(this.responseText);
+            const result = JSON.parse(this.responseText);
 
+           if(result === true)
+           alert("User name exist")
+           else
+           alert("User name doesn't exist")
 
         }
     }
@@ -80,15 +86,29 @@ document.getElementById('uName').innerHTML = outputName;
 
 function addNewUser(){
 const xhr = new XMLHttpRequest();
-Name = document.getElementById("userName").value;
+name = document.getElementById("userName").value;
 pass = document.getElementById("password").value;
 
-xhr.open('POST', "http://localhost:8080/stockexchange/user/register", true );
+xhr.open('POST', "http://localhost:8080/stockexchange/user/user", true );
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.onload = function(){
   console.log(this.responseText);
 }
 
-xhr.send(JSON.stringify({userName:Name, password:pass}));
+xhr.send(JSON.stringify({userName:name, password:pass}));
 }
 
+
+function addHistory(){
+
+const xhr = new XMLHttpRequest();
+const operationBuy = "Buy";
+symbol = document.getElementById("symbol").value;
+latestPrice = document.getElementById("outputLatestPrice").value;
+xhr.open('POST', "http://localhost:8080/stockexchange/history/history", true );
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.onload = function(){
+  console.log(this.responseText);
+}
+xhr.send(JSON.stringify({operation:operationBuy, stock_symbol:symbol, stock_price:latestPrice}));
+}
