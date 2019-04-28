@@ -5,7 +5,7 @@ public enum Operation {
     BUY ,
     SELL;
 
-    private Operation(){};
+    Operation(){};
 
 }
 

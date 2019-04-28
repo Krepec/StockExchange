@@ -16,16 +16,43 @@ public class Market {
     @Autowired
     private PortfolioService portfolioService;
 
-
-
-    public Double getUserAccount(String userName, String password){
-        UserDTO userDTO = userService.findByUserNameAndPassword(userName, password);
-        return userDTO.getCash();
+    public UserDTO getUserAccount(String userName, String password) {
+        return userService.findByUserNameAndPassword(userName, password);
     }
+
 
     public Double calculate(Double stockPrice, Double quantity) {
         return stockPrice * quantity;
+
     }
+
+
+    public Double shop(Operation operation) {
+        Double calculateStockPrice = calculate(10.0, 5.0);
+        UserDTO userDTO = getUserAccount("a", "a");
+        Double userCash = userDTO.getCash();
+        Double result = null;
+        switch (operation) {
+            case SELL:
+                result = userCash + calculateStockPrice;
+                return result;
+
+            case BUY:
+                result = userCash - calculateStockPrice;
+                return result;
+        }
+
+        return userCash;
+    }
+
+}
+    /*  public Double getUserAccount(String userName, String password){
+        UserDTO userDTO = userService.findByUserNameAndPassword(userName, password);
+        return userDTO.getCash();
+
+
+
+
 
     public PortfolioDTO getStockInfo(String stockSymbol){
        return portfolioService.getStockInfoFromURL(stockSymbol);
@@ -48,3 +75,4 @@ public class Market {
 
 
 }
+*/

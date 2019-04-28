@@ -23,18 +23,12 @@ public class UserService {
         return mapUser(userDAO);
     }
 
-    public Integer addNewUser(UserDTO userDTO) {
-        UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash()));
-        return userDAO.getId();
-    }
-
 
     public List<UserDAO> finadAllUsers() {
         return (List<UserDAO>) userRepository.findAll();
     }
 
     public Boolean checkUserNameExist(String userName) {
-        Boolean result = null;
         UserDAO userDAO = userRepository.findByUserName(userName);
         UserDTO userDTO = mapUser(userDAO);
 
@@ -47,7 +41,23 @@ public class UserService {
         if (userDAO.getUserName().equals(userName) & userDAO.getPassword().equals(password)) {
             mapUser(userDAO);
             return mapUser(userDAO);
-        } else System.out.println("Login failed, chech user name and password");
+        } else System.out.println("Login failed, check user name and password");
         return null;
     }
+
+    public Integer addNewUser(UserDTO userDTO) {
+        UserDAO user = userRepository.findByUserName(userDTO.getUserName());
+        if (user.getUserName().equals(userDTO.getUserName())){
+            return 0;
+        }
+        else {
+            UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash()));
+            System.out.println(userDAO);
+
+            return userDAO.getId();
+        }
+
+    }
+
 }
+
