@@ -2,6 +2,7 @@ package pl.krepec.stockExchange.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.krepec.stockExchange.model.Operation;
 import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.repository.model.UserDAO;
 import pl.krepec.stockExchange.service.UserService;
@@ -46,6 +47,18 @@ public class UserController {
                           @RequestParam (required = true , value = "password") String password){
         return userService.findByUserNameAndPassword(userName, password);
     }
+
+    @PutMapping("/{id}")
+    private String updateUserCash(@PathVariable(required = true, value = "id") Integer id,
+                                  @RequestParam(required = true, value = "stockPrice") Double stockPrice,
+                                  @RequestParam(required = true, value = "quantity") Double quantity,
+                                  @RequestParam(required = true, value = "operation") Operation operation,
+                                  @RequestBody UserDTO userDTO){
+
+        return userService.updateUserCash(id, stockPrice, quantity,operation, userDTO);
+
+    }
+
 
     @PostMapping(value = "/user", consumes = "application/json")
     public Integer addNewUser(@RequestBody UserDTO userDTO) {

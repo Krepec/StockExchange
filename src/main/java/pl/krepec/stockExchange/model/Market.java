@@ -2,35 +2,25 @@ package pl.krepec.stockExchange.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.krepec.stockExchange.service.HistoryService;
 import pl.krepec.stockExchange.service.PortfolioService;
-import pl.krepec.stockExchange.service.UserService;
 
 @Component
 public class Market {
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private HistoryService historyService;
-    @Autowired
     private PortfolioService portfolioService;
 
-    public UserDTO getUserAccount(String userName, String password) {
-        return userService.findByUserNameAndPassword(userName, password);
+    private PortfolioDTO getStockInfo(String stockSymbol){
+        return portfolioService.getStockInfoFromURL(stockSymbol);
     }
 
-
-    public Double calculate(Double stockPrice, Double quantity) {
+    private Double calculate(Double stockPrice, Double quantity) {
         return stockPrice * quantity;
 
     }
 
-
-    public Double shop(Operation operation) {
-        Double calculateStockPrice = calculate(10.0, 5.0);
-        UserDTO userDTO = getUserAccount("a", "a");
-        Double userCash = userDTO.getCash();
+        public Double shopping(Double userCash, Double stockPrice, Double quantity, Operation operation) {
+        Double calculateStockPrice = calculate(stockPrice, quantity);
         Double result = null;
         switch (operation) {
             case SELL:
@@ -40,11 +30,11 @@ public class Market {
             case BUY:
                 result = userCash - calculateStockPrice;
                 return result;
-        }
 
-        return userCash;
     }
 
+            return result;
+        }
 }
     /*  public Double getUserAccount(String userName, String password){
         UserDTO userDTO = userService.findByUserNameAndPassword(userName, password);
@@ -54,9 +44,7 @@ public class Market {
 
 
 
-    public PortfolioDTO getStockInfo(String stockSymbol){
-       return portfolioService.getStockInfoFromURL(stockSymbol);
-    }
+
 
     public Double shoping(Double userCash, Double calculateCash,  Operation operation){
         Double result = null;

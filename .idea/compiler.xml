@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="stock-exchange" />
         <module name="StockExchange" />
+        <module name="stockExchange" />
+        <module name="stock-exchange" />
       </profile>
     </annotationProcessing>
   </component>

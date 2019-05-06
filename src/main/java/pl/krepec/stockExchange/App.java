@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -17,7 +15,7 @@ public class App {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Desktop.getDesktop().open(new File("/home/jerzyn/Desktop/Java Projects/StockExchange/src/main/java/pl/krepec/stockExchange/view/index.html"));
+       // Desktop.getDesktop().open(new File("/home/laptop/Desktop/java/stockExchange/src/main/java/pl/krepec/stockExchange/view/index.html"));
 
         SpringApplication.run(App.class, args);
 

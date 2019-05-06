@@ -2,6 +2,8 @@ package pl.krepec.stockExchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.krepec.stockExchange.model.Market;
+import pl.krepec.stockExchange.model.Operation;
 import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.repository.UserRepository;
 import pl.krepec.stockExchange.repository.model.UserDAO;
@@ -13,6 +15,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private Market market;
 
     private UserDTO mapUser(UserDAO userDAO) {
         return new UserDTO(userDAO.getId(), userDAO.getUserName(), userDAO.getPassword(), userDAO.getCash());
@@ -43,6 +47,17 @@ public class UserService {
             return mapUser(userDAO);
         } else System.out.println("Login failed, check user name and password");
         return null;
+    }
+
+    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO user){
+       UserDAO userDAO =  userRepository.findOne(id);
+       UserDTO userDTO = mapUser(userDAO);
+       Double userCash =  userDTO.getCash();
+       Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
+       userDTO.setCash(cashAfterShopping);
+       UserDAO userDAOafterShopping = userRepository.save(new UserDAO(user.getId(), user.getUserName(), user.getPassword(), user.getCash()));
+       return "Actual cash is: " + userDAOafterShopping.getCash();
+
     }
 
     public Integer addNewUser(UserDTO userDTO) {
