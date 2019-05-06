@@ -49,13 +49,12 @@ public class UserService {
         return null;
     }
 
-    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO user){
+    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO userDTO){
        UserDAO userDAO =  userRepository.findOne(id);
-       UserDTO userDTO = mapUser(userDAO);
-       Double userCash =  userDTO.getCash();
+       Double userCash =  userDAO.getCash();
        Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
-       userDTO.setCash(cashAfterShopping);
-       UserDAO userDAOafterShopping = userRepository.save(new UserDAO(user.getId(), user.getUserName(), user.getPassword(), user.getCash()));
+       userDAO.setCash(cashAfterShopping);
+       UserDAO userDAOafterShopping = userRepository.save(userDAO);
        return "Actual cash is: " + userDAOafterShopping.getCash();
 
     }
@@ -66,6 +65,7 @@ public class UserService {
             return 0;
         }
         else {
+
             UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash()));
             System.out.println(userDAO);
 
