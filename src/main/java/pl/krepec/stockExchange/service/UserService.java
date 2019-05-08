@@ -24,7 +24,10 @@ public class UserService {
 
     public UserDTO findUserById(Integer id) {
         UserDAO userDAO = userRepository.findOne(id);
-        return mapUser(userDAO);
+        System.out.println(userDAO.getCash());
+        UserDTO userDTO = mapUser(userDAO);
+        System.out.println(userDTO.getCash());
+        return userDTO;
     }
 
 
@@ -49,28 +52,31 @@ public class UserService {
         return null;
     }
 
-    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO userDTO){
-       UserDAO userDAO =  userRepository.findOne(id);
-       Double userCash =  userDAO.getCash();
-       Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
-       userDAO.setCash(cashAfterShopping);
-       UserDAO userDAOafterShopping = userRepository.save(userDAO);
-       return "Actual cash is: " + userDAOafterShopping.getCash();
+    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO userDTO) {
+        UserDAO userDAO = userRepository.findOne(id);
+        Double userCash = userDAO.getCash();
+        Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
+        userDAO.setCash(cashAfterShopping);
+        UserDAO userDAOafterShopping = userRepository.save(userDAO);
+        return "Actual cash is: " + userDAOafterShopping.getCash();
 
     }
 
     public Integer addNewUser(UserDTO userDTO) {
         UserDAO user = userRepository.findByUserName(userDTO.getUserName());
-        if (user.getUserName().equals(userDTO.getUserName())){
+
+        try {
+            boolean userExist = user.getUserName().equals(userDTO.getUserName());
+            System.out.println("User name exist !!!");
             return 0;
-        }
-        else {
+
+        } catch (NullPointerException e) {
 
             UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash()));
-            System.out.println(userDAO);
-
+            System.out.println("New user added. Your ID is: " + userDAO.getId());
             return userDAO.getId();
         }
+
 
     }
 

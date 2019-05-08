@@ -42,7 +42,7 @@ public class UserDTO {
         this.id = id;
         this.userName = userName;
         this.password = password;
-        this.cash = 10000.0;
+        this.cash = cash;
     }
 
     public UserDTO() {
