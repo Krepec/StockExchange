@@ -1,6 +1,7 @@
 package pl.krepec.stockExchange.repository.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "portfolio")
@@ -20,7 +21,17 @@ public class PortfolioDAO {
     @Column(name = "stock_current_price")
     private Double stockCurrentPrice;
 
+    @NotNull
+    @Column(name = "user_id")
+    private Integer userId;
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;
@@ -55,11 +66,12 @@ public class PortfolioDAO {
     }
 
 
-    public PortfolioDAO(Integer id, String stockSymbol, Integer numberOfShares, Double stockCurrentPrice) {
+    public PortfolioDAO(Integer id, String stockSymbol, Integer numberOfShares, Double stockCurrentPrice, Integer userId) {
         this.id = id;
         this.stockSymbol = stockSymbol;
         this.numberOfShares = numberOfShares;
         this.stockCurrentPrice = stockCurrentPrice;
+        this.userId = userId;
     }
 
     public PortfolioDAO() {

@@ -39,8 +39,8 @@ public class Json {
 
     public PortfolioDTO parseJson(String jsonString) {
 
-        String symbol = "";
-        Double latestPrice = 0.0;
+        String symbol;
+        Double latestPrice;
         PortfolioDTO stockInfo = null;
 
         try {

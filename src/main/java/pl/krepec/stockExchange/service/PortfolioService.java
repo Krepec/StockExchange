@@ -16,7 +16,7 @@ public class PortfolioService {
 
 
     private PortfolioDTO mapPortfolio(PortfolioDAO portfolioDAO) {
-        return new PortfolioDTO(portfolioDAO.getId(), portfolioDAO.getStockSymbol(), portfolioDAO.getNumberOfShares(), portfolioDAO.getStockCurrentPrice());
+        return new PortfolioDTO(portfolioDAO.getId(), portfolioDAO.getStockSymbol(), portfolioDAO.getNumberOfShares(), portfolioDAO.getStockCurrentPrice(),portfolioDAO.getUserId());
     }
 
     public PortfolioDTO getStockInfoFromURL(String symbol) {
@@ -33,7 +33,7 @@ public class PortfolioService {
     }
 
     public Integer addPortfolio(PortfolioDTO portfolioDTO) {
-        PortfolioDAO portfolioDAO = portfolioRepository.save(new PortfolioDAO(portfolioDTO.getId(), portfolioDTO.getStockSymbol(), portfolioDTO.getNumberOfShares(), portfolioDTO.getStockCurrentPrice()));
+        PortfolioDAO portfolioDAO = portfolioRepository.save(new PortfolioDAO(portfolioDTO.getId(), portfolioDTO.getStockSymbol(), portfolioDTO.getNumberOfShares(), portfolioDTO.getStockCurrentPrice(), portfolioDTO.getUserId()));
         return portfolioDTO.getId();
     }
 }

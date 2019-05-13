@@ -6,6 +6,15 @@ public class PortfolioDTO {
    private String stockSymbol;
    private Integer numberOfShares;
    private Double stockCurrentPrice;
+   private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;
@@ -39,11 +48,12 @@ public class PortfolioDTO {
         this.stockCurrentPrice = stockCurrentPrice;
     }
 
-    public PortfolioDTO(Integer id, String stockSymbol, Integer numberOfShares, Double stockCurrentPrice) {
+    public PortfolioDTO(Integer id, String stockSymbol, Integer numberOfShares, Double stockCurrentPrice, Integer userId) {
         this.id = id;
         this.stockSymbol = stockSymbol;
         this.numberOfShares = numberOfShares;
         this.stockCurrentPrice = stockCurrentPrice;
+        this.userId = userId;
     }
 
     public PortfolioDTO(String stockSymbol, Double stockCurrentPrice) {

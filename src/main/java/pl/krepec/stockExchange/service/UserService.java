@@ -57,8 +57,8 @@ public class UserService {
         Double userCash = userDAO.getCash();
         Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
         userDAO.setCash(cashAfterShopping);
-        UserDAO userDAOafterShopping = userRepository.save(userDAO);
-        return "Actual cash is: " + userDAOafterShopping.getCash();
+        UserDAO userDAOcashAfterShopping = userRepository.save(userDAO);
+        return "Actual cash is: " + userDAOcashAfterShopping.getCash();
 
     }
 
