@@ -34,6 +34,6 @@ public class PortfolioService {
 
     public Integer addPortfolio(PortfolioDTO portfolioDTO) {
         PortfolioDAO portfolioDAO = portfolioRepository.save(new PortfolioDAO(portfolioDTO.getId(), portfolioDTO.getStockSymbol(), portfolioDTO.getNumberOfShares(), portfolioDTO.getStockCurrentPrice(), portfolioDTO.getUserId()));
-        return portfolioDTO.getId();
+        return portfolioDAO.getId();
     }
 }

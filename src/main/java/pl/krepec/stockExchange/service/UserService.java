@@ -52,10 +52,10 @@ public class UserService {
         return null;
     }
 
-    public String updateUserCash(Integer id, Double stockPrice, Double quantity, Operation operation, UserDTO userDTO) {
+    public String updateUserCash(Integer id, Double quantity, Operation operation, String stockSymbol) {
         UserDAO userDAO = userRepository.findOne(id);
         Double userCash = userDAO.getCash();
-        Double cashAfterShopping = market.shopping(userCash, stockPrice, quantity, operation);
+        Double cashAfterShopping = market.shopping(id, quantity, operation, stockSymbol);
         userDAO.setCash(cashAfterShopping);
         UserDAO userDAOcashAfterShopping = userRepository.save(userDAO);
         return "Actual cash is: " + userDAOcashAfterShopping.getCash();

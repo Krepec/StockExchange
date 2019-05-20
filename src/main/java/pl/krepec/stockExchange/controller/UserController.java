@@ -50,12 +50,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     private String updateUserCash(@PathVariable(required = true, value = "id") Integer id,
-                                  @RequestParam(required = true, value = "stockPrice") Double stockPrice,
                                   @RequestParam(required = true, value = "quantity") Double quantity,
                                   @RequestParam(required = true, value = "operation") Operation operation,
-                                  @RequestBody UserDTO userDTO){
+                                  @RequestParam(required = true, value = "stockSymbol") String stockSymbol)
+    {
 
-        return userService.updateUserCash(id, stockPrice, quantity,operation, userDTO);
+        return userService.updateUserCash(id, quantity,operation, stockSymbol);
 
     }
 
