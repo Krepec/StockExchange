@@ -3,6 +3,7 @@ package pl.krepec.stockExchange.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.krepec.stockExchange.model.PortfolioDTO;
+import pl.krepec.stockExchange.repository.requests.UpdateUserDetail;
 import pl.krepec.stockExchange.service.PortfolioService;
 
 @RestController
@@ -13,8 +14,13 @@ public class PortfolioController {
     private PortfolioService portfolioService;
 
     @GetMapping("/stockinfo/{symbol}")
-    public PortfolioDTO getStockInfoFromURL(@PathVariable("symbol") String symbol){
-        return portfolioService.getStockInfoFromURL(symbol);
+    public PortfolioDTO getStockInfoFromURL(@PathVariable("symbol") String stockSymbol){
+        return portfolioService.getPortfolioInfoFromUrl(stockSymbol);
+    }
+
+    @GetMapping("/stockinfo/")
+    public PortfolioDTO getPortfolioStockBySymbol(@RequestParam(value = "symbol") String stockSymbol){
+        return portfolioService.getPortfolioByStockBySymbol(stockSymbol);
     }
 
     @GetMapping("/{id}")
@@ -27,5 +33,11 @@ public class PortfolioController {
         return portfolioService.addPortfolio(portfolioDTO);
     }
 
+    @PutMapping("/{id}")
+    public String updatePortfolio(@PathVariable(required = true, value = "id") Integer id,
+                                  @RequestBody UpdateUserDetail userDetail) {
 
+        return portfolioService.updatePortfolio(id, userDetail);
+
+    }
 }

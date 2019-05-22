@@ -54,7 +54,6 @@ public class UserService {
 
     public String updateUserCash(Integer id, Double quantity, Operation operation, String stockSymbol) {
         UserDAO userDAO = userRepository.findOne(id);
-        Double userCash = userDAO.getCash();
         Double cashAfterShopping = market.shopping(id, quantity, operation, stockSymbol);
         userDAO.setCash(cashAfterShopping);
         UserDAO userDAOcashAfterShopping = userRepository.save(userDAO);

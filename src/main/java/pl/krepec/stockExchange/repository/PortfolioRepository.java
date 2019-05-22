@@ -5,4 +5,6 @@ import pl.krepec.stockExchange.repository.model.PortfolioDAO;
 
 public interface PortfolioRepository extends CrudRepository<PortfolioDAO, Integer> {
 
+    PortfolioDAO findByStockSymbol(String stockSymbol);
+
 }

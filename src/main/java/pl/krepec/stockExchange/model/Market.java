@@ -14,8 +14,8 @@ public class Market {
     @Autowired
     private UserService userService;
 
-    private PortfolioDTO getStockInfo(String stockSymbol){
-        return portfolioService.getStockInfoFromURL(stockSymbol);
+    private PortfolioDTO getStockInfo(String stockSymbol) {
+        return portfolioService.getPortfolioInfoFromUrl(stockSymbol);
     }
 
     private Double calculate(Double stockPrice, Double quantity) {
@@ -23,15 +23,34 @@ public class Market {
 
     }
 
-    private UserDTO getUser(Integer id){
+    private void updatePortfolio(Integer id, Double quantity, Operation operation, String stockSymbol) {
+        PortfolioDTO stockInfoFromURL = getStockInfo(stockSymbol);
+        Double stockPrice = stockInfoFromURL.getStockCurrentPrice();
+        PortfolioDTO portfolioDTO = portfolioService.getPortfolioByStockBySymbol(stockSymbol);
+
+        if (portfolioDTO.getStockSymbol().equals(stockSymbol)) {
+            Double numberOfShares = portfolioDTO.getNumberOfShares();
+           switch (operation){
+               case BUY:
+                 Double result = numberOfShares + quantity;
+
+               case SELL:
+           }
+
+            portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
+        }
+
+
+    }
+
+    private UserDTO getUser(Integer id) {
         return userService.findUserById(id);
     }
 
-        public Double shopping(Integer id, Double quantity, Operation operation, String stockSymbol) {
+    public Double shopping(Integer id, Double quantity, Operation operation, String stockSymbol) {
         UserDTO userDTO = getUser(id);
         PortfolioDTO portfolioDTO = getStockInfo(stockSymbol);
         Double stockPrice = portfolioDTO.getStockCurrentPrice();
-
         Double calculateStockPrice = calculate(stockPrice, quantity);
         Double result = null;
         switch (operation) {
@@ -40,39 +59,11 @@ public class Market {
                 return result;
             case BUY:
                 result = userDTO.getCash() - calculateStockPrice;
-                portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity,stockPrice, id));
+                portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
                 return result;
 
-    }
-
-            return result;
         }
-}
-    /*  public Double getUserAccount(String userName, String password){
-        UserDTO userDTO = userService.findByUserNameAndPassword(userName, password);
-        return userDTO.getCash();
 
-
-
-
-
-
-
-    public Double shoping(Double userCash, Double calculateCash,  Operation operation){
-        Double result = null;
-        switch (operation){
-            case BUY:
-                result = userCash - calculateCash;
-                return result;
-            case SELL:
-                result = userCash + calculateCash;
-                return result;
-        }
-        return result ;
-
+        return result;
     }
-
-
-
 }
-*/
