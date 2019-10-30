@@ -2,8 +2,8 @@ package pl.krepec.stockExchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.krepec.stockExchange.model.Market;
-import pl.krepec.stockExchange.model.Operation;
+import pl.krepec.stockExchange.Market;
+import pl.krepec.stockExchange.Operation;
 import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.repository.UserRepository;
 import pl.krepec.stockExchange.repository.model.UserDAO;
@@ -19,7 +19,7 @@ public class UserService {
     private Market market;
 
     private UserDTO mapUser(UserDAO userDAO) {
-        return new UserDTO(userDAO.getId(), userDAO.getUserName(), userDAO.getPassword(), userDAO.getCash());
+        return new UserDTO(userDAO.getId(), userDAO.getUserName(), userDAO.getPassword(), userDAO.getCash(), userDAO.getRole());
     }
 
     public UserDTO findUserById(Integer id) {
@@ -71,13 +71,15 @@ public class UserService {
 
         } catch (NullPointerException e) {
 
-            UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash()));
+            UserDAO userDAO = userRepository.save(new UserDAO(userDTO.getId(), userDTO.getUserName(), userDTO.getPassword(), userDTO.getCash(), userDTO.getRole()));
             System.out.println("New user added. Your ID is: " + userDAO.getId());
             return userDAO.getId();
         }
 
 
     }
+
+
 
 }
 

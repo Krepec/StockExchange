@@ -1,7 +1,9 @@
-package pl.krepec.stockExchange.model;
+package pl.krepec.stockExchange;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.krepec.stockExchange.model.PortfolioDTO;
+import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.service.PortfolioService;
 import pl.krepec.stockExchange.service.UserService;
 
@@ -30,12 +32,11 @@ public class Market {
 
         if (portfolioDTO.getStockSymbol().equals(stockSymbol)) {
             Double numberOfShares = portfolioDTO.getNumberOfShares();
-           switch (operation){
-               case BUY:
-                 Double result = numberOfShares + quantity;
-
-               case SELL:
-           }
+            switch (operation) {
+                case BUY:
+                    Double result = numberOfShares + quantity;
+                case SELL:
+            }
 
             portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
         }
@@ -52,18 +53,22 @@ public class Market {
         PortfolioDTO portfolioDTO = getStockInfo(stockSymbol);
         Double stockPrice = portfolioDTO.getStockCurrentPrice();
         Double calculateStockPrice = calculate(stockPrice, quantity);
-        Double result = null;
+        Double result;
         switch (operation) {
             case SELL:
                 result = userDTO.getCash() + calculateStockPrice;
                 return result;
             case BUY:
-                result = userDTO.getCash() - calculateStockPrice;
-                portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
-                return result;
+                if (userDTO.getCash() < calculateStockPrice) {
+                    System.out.println("Masz za mało pieniędzy do dokonania tego zakupu");
+                } else {
+                    result = userDTO.getCash() - calculateStockPrice;
+                    portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
+                    return result;
+                }
 
         }
 
-        return result;
+        return result = userDTO.getCash();
     }
 }

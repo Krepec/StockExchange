@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.Column;
 
 @Component
-public class UpdateUserDetail {
+public class UpdatePortfolioDetail {
 
     @Column(name = "number_of_shares")
     private Double numberOfShares;

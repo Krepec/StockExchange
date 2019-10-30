@@ -2,10 +2,11 @@ package pl.krepec.stockExchange.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.krepec.stockExchange.Json;
 import pl.krepec.stockExchange.model.PortfolioDTO;
 import pl.krepec.stockExchange.repository.PortfolioRepository;
 import pl.krepec.stockExchange.repository.model.PortfolioDAO;
-import pl.krepec.stockExchange.repository.requests.UpdateUserDetail;
+import pl.krepec.stockExchange.repository.requests.UpdatePortfolioDetail;
 
 @Service
 public class PortfolioService {
@@ -21,7 +22,7 @@ public class PortfolioService {
     }
 
     public PortfolioDTO getPortfolioInfoFromUrl(String stockSymbol) {
-        String url = "https://api.iextrading.com/1.0/stock/"+ stockSymbol +"/quote";
+        String url = "https://cloud.iexapis.com/stable/tops?token=pk_c929ec1a991e4b5fb83d4d41233ef431&symbols="+stockSymbol;
         String jsonString = json.readUrl(url);
 
         return json.parseJson(jsonString);
@@ -43,9 +44,9 @@ public class PortfolioService {
         return mapPortfolio(portfolioDAO);
     }
 
-    public String updatePortfolio(Integer id, UpdateUserDetail updateUserDetail) {
+    public String updatePortfolio(Integer id, UpdatePortfolioDetail updatePortfolioDetail) {
         PortfolioDAO portfolioDAO = portfolioRepository.findOne(id);
-        portfolioDAO.setNumberOfShares(updateUserDetail.getNumberOfShares());
+        portfolioDAO.setNumberOfShares(updatePortfolioDetail.getNumberOfShares());
         portfolioRepository.save(portfolioDAO);
         return "Portfolio updated! Number of shares: " + portfolioDAO.getNumberOfShares();
 

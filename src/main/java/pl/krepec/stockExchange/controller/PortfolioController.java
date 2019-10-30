@@ -3,7 +3,7 @@ package pl.krepec.stockExchange.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.krepec.stockExchange.model.PortfolioDTO;
-import pl.krepec.stockExchange.repository.requests.UpdateUserDetail;
+import pl.krepec.stockExchange.repository.requests.UpdatePortfolioDetail;
 import pl.krepec.stockExchange.service.PortfolioService;
 
 @RestController
@@ -35,9 +35,9 @@ public class PortfolioController {
 
     @PutMapping("/{id}")
     public String updatePortfolio(@PathVariable(required = true, value = "id") Integer id,
-                                  @RequestBody UpdateUserDetail userDetail) {
+                                  @RequestBody UpdatePortfolioDetail updatePortfolioDetail) {
 
-        return portfolioService.updatePortfolio(id, userDetail);
+        return portfolioService.updatePortfolio(id, updatePortfolioDetail);
 
     }
 }

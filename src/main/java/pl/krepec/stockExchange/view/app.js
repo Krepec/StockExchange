@@ -38,9 +38,7 @@ userName = document.getElementById("userName").value;
 
 xhr.open('GET', "http://localhost:8080/stockexchange/user/check?username="+userName ,true);
 
-//xhr.setRequestHeader('Access-Control-Allow-Origin','http://localhost:8080/');
-//xhr.setRequestHeader('Content-type','application/json');
-//xhr.setRequestHeader('Access-Control-Allow-Methods','GET');
+
 
   xhr.onload = function(){
         if(this.status === 200){
@@ -87,16 +85,13 @@ function addNewUser(){
 const xhr = new XMLHttpRequest();
 name = document.getElementById("userName").value;
 pass = document.getElementById("password").value;
-console.log(name)
-console.log(pass)
+
 xhr.open('POST', "http://localhost:8080/stockexchange/user/user", true );
 xhr.setRequestHeader("Content-Type", "application/json");
 xhr.onload = function(){
   console.log(this.responseText);
-  const result = JSON.parse(this.responseText);
-  if(result === 0 )
-  alert("User name exist, choose other")
-
+  console.log(name)
+  console.log(pass)
 }
 
 xhr.send(JSON.stringify({userName:name, password:pass}));
@@ -114,7 +109,7 @@ xhr.onload = function(){
         const stockInfo = JSON.parse(this.responseText);
         const stockSymbol = ` ${stockInfo.symbol}`;
         const latestPrice = ` ${stockInfo.latestPrice}`;
-
+        
         xhr.open('POST', "http://localhost:8080/stockexchange/history/history", true );
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify({operation:operationBuy, stock_symbol:stockSymbol, stock_price:latestPrice}));

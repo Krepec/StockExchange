@@ -2,7 +2,7 @@ package pl.krepec.stockExchange.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.krepec.stockExchange.model.Operation;
+import pl.krepec.stockExchange.Operation;
 import pl.krepec.stockExchange.model.UserDTO;
 import pl.krepec.stockExchange.repository.model.UserDAO;
 import pl.krepec.stockExchange.service.UserService;
@@ -18,7 +18,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/{id}")
     public UserDTO findUserById(@PathVariable("id") Integer id) {
         return userService.findUserById(id);
@@ -30,12 +29,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/check")
-    public Boolean checkUserExist(@RequestParam(required = true,value = "username") String userName) {
+    public Boolean checkUserExist(@RequestParam(required = true, value = "username") String userName) {
 
         try {
             return userService.checkUserNameExist(userName);
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("User name don't exist");
         }
 
@@ -43,8 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    private UserDTO login(@RequestParam (required = true, value = "username") String userName,
-                          @RequestParam (required = true , value = "password") String password){
+    public UserDTO login(@RequestParam(required = true, value = "username") String userName,
+                          @RequestParam(required = true, value = "password") String password) {
         return userService.findByUserNameAndPassword(userName, password);
     }
 
@@ -55,7 +53,7 @@ public class UserController {
                                   @RequestParam(required = true, value = "stockSymbol") String stockSymbol)
     {
 
-        return userService.updateUserCash(id, quantity,operation, stockSymbol);
+        return userService.updateUserCash(id, quantity, operation, stockSymbol);
 
     }
 

@@ -1,5 +1,6 @@
-package pl.krepec.stockExchange.service;
+package pl.krepec.stockExchange;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -44,9 +45,10 @@ public class Json {
         PortfolioDTO stockInfo = null;
 
         try {
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonString);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(jsonString);
+            JSONObject jsonObject = (JSONObject) jsonArray.get(0);
             String stockSymbol = (String) jsonObject.get("symbol");
-            Double stockLatestPrice = (Double) jsonObject.get("latestPrice");
+            Double stockLatestPrice = (Double) jsonObject.get("lastSalePrice");
             symbol = stockSymbol;
             latestPrice = stockLatestPrice;
             stockInfo = new PortfolioDTO(symbol, latestPrice);
@@ -55,8 +57,8 @@ public class Json {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return stockInfo;
 
+        return stockInfo;
     }
 
 }
