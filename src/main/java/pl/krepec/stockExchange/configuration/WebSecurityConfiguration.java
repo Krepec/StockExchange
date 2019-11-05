@@ -27,11 +27,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/stockexchange/user/user/","/stockexchange/user/user").access("hasAuthority('ADMIN')")
-                .antMatchers("/test2").access("hasAuthority('USER')")
                 .and()
-                .formLogin();
-
-
+                .formLogin()
+                .and()
+                .logout()
+                .permitAll();
 
     }
 }

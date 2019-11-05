@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>StockExchange Login Page</title>
 </head>
 <!--z dysku -->
+
 <!-- <link rel="stylesheet" href="/home/jerzyn/Desktop/Java Projects/StockExchange/src/main/java/pl/krepec/stockExchange/view/css/all.css"> -->
+
 <!--ze strony -->
 <script src="https://kit.fontawesome.com/be9ce9445f.js" crossorigin="anonymous"></script>
 
@@ -17,33 +19,41 @@ i.chartColor{
     color: red;
 }
 i.title{
-    color: blueviole;
+    color: red;
+    
     }
 
 </style>
 <body>
     <center>
 
-    <div style="float: left"> <br><H2 id="s">Login</H2> </div>
-    
-    <div><i class="fas fa-chart-line fa-5x chartColor"></i></div>
-    <div><i class="title"> Stock Exchange</i> </div>  
+
+    <div><i class="fas fa-chart-line fa-5x chartColor"></i> <br>
+        <i class="title"><b>Stock Exchange</b></i> </div>
       <table>
-        <tr> 
+        <tr>
             <td>User name:</td>
-            <td><input id="userName" type="text"/>
+            <td>
+                <input id="userName" type="text"/>
             </td>
         <tr>
         </tr>
             <td>Password: </td>
-            <td><input id="password" type="password"/>
-        </td>
+            <td>
+                <input id="password" type="password"/>
+            </td>
         </tr>
         <tr>
-            </tr>
-                <td><button id="Login"> Login</button>
+            <td>
+                <input type="submit" name="submit" value="Login">
             </td>
-            </tr>
+
+            <td>
+                <form action="register.html">
+                    <input type="submit" value="Register new member" />
+                </form>
+            </td>
+        </tr>
 
       </table>
     <!-- <p>
