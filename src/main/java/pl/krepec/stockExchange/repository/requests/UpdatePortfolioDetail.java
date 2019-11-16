@@ -8,14 +8,20 @@ import javax.persistence.Column;
 public class UpdatePortfolioDetail {
 
     @Column(name = "number_of_shares")
-    private Double numberOfShares;
+    private Integer numberOfShares;
 
-    public Double getNumberOfShares() {
-        return numberOfShares;
-    }
-
-    public void setNumberOfShares(Double numberOfShares) {
+    public UpdatePortfolioDetail(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
 
+    public Integer getNumberOfShares() {
+        return numberOfShares;
+    }
+
+    public void setNumberOfShares(Integer numberOfShares) {
+        this.numberOfShares = numberOfShares;
+    }
+
+    public UpdatePortfolioDetail() {
+    }
 }

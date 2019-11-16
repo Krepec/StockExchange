@@ -8,34 +8,47 @@
 </head>
 
 
-<body>   
-<h1><div id = "sample"> Write stock symbol. Example: GOLD, BABA, FB </div></h1>
+<body>
+    
+    <div class="welcome"><font size="6">Welcome <span id="name"></span></font></div>
+    <div class="userInfo">
+        <tr>
+           <td>Id: </td> 
+           <td>
+               <span id="userId"></span><br>
+            </td>
+        </tr> 
+        <tr>
+            <td>Cash:</td>
+            <td>
+            <span id="cash"> </span>
+            </td>
+        </tr> 
+    </div>
 
-<p>
-    <div><label for="User name"> User name:  </label><input id="userName" type="text"/></div><br>
-    <div><label for="Password "> Password:   </label><input id="password" type="password"/></div><br>
-    <div><button id="Check"> Check user name </button> <button id="Login"> Login</button> <button id="AddNewUser"> Add new user</button></div>
-</p>
- <p>
-    <div><label for="Stock symbol"> Stock symbol:  </label> <input id="stockSymbol" type="text"/> <br/><br/></div>
-    <div><button id="Submit"> Submit</button></div>
-
-    <div><label for="Quantity"> Quantity:  </label><input id="quantity" type="text"/></div><br>
-    <div><button id="Buy">Buy </button></div>
+<h4><div id = "sample"> Chceck latest price for stock symbol. Example: GOLD, BABA, FB </div></h4>
+<table>
+    <tr>
+        <td>Stock symbol: </td>
+        <td>
+            <input id="stockSymbol" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button  id="submit">Check price</button>
+        </td>
+        <td>
+            <span id="outputLatestPrice"></span>
+        </td>
+    </tr>
+    
+    <button  id="ss">Check user</button>
+</table> 
+   
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="app.js"></script>
+<script src="login.js"></script>
 
-</p>
-<div>For symbol <span id="symbol">____</span> latest price is <span id="outputLatestPrice">____</span></div>
-
-<p>
-    <div>User Id:  <span id="userId"></span></div>
-    <div>User Name:<span id="uName"></span></div>
-    <div>User Cash:<span id="userCash"></span></div>
-
-</p>
-
-</p>
 </body>
 </html>

@@ -118,7 +118,7 @@ public class UserDAO implements UserDetails {
         this.id = id;
         this.userName = userName;
         this.password = password;
-        this.cash = cash;
+        this.cash = 10000.0;
         this.role = role;
     }
 

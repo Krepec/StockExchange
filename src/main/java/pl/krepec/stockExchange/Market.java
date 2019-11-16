@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.krepec.stockExchange.model.PortfolioDTO;
 import pl.krepec.stockExchange.model.UserDTO;
+import pl.krepec.stockExchange.repository.requests.UpdatePortfolioDetail;
 import pl.krepec.stockExchange.service.PortfolioService;
 import pl.krepec.stockExchange.service.UserService;
 
@@ -20,21 +21,21 @@ public class Market {
         return portfolioService.getPortfolioInfoFromUrl(stockSymbol);
     }
 
-    private Double calculate(Double stockPrice, Double quantity) {
+    private Double calculate(Double stockPrice, Integer quantity) {
         return stockPrice * quantity;
 
     }
 
-    private void updatePortfolio(Integer id, Double quantity, Operation operation, String stockSymbol) {
+    private void updatePortfolio(Integer id, Integer quantity, Operation operation, String stockSymbol) {
         PortfolioDTO stockInfoFromURL = getStockInfo(stockSymbol);
         Double stockPrice = stockInfoFromURL.getStockCurrentPrice();
         PortfolioDTO portfolioDTO = portfolioService.getPortfolioByStockBySymbol(stockSymbol);
 
         if (portfolioDTO.getStockSymbol().equals(stockSymbol)) {
-            Double numberOfShares = portfolioDTO.getNumberOfShares();
+            Integer numberOfShares = portfolioDTO.getNumberOfShares();
             switch (operation) {
                 case BUY:
-                    Double result = numberOfShares + quantity;
+                    Integer result = numberOfShares + quantity;
                 case SELL:
             }
 
@@ -44,11 +45,16 @@ public class Market {
 
     }
 
+    private Boolean checkExistingStockInPortfolio(String stockSymbol) {
+        PortfolioDTO portfolioDTO = portfolioService.getPortfolioByStockBySymbol(stockSymbol);
+        return portfolioDTO.getStockSymbol().equals(stockSymbol);
+    }
+
     private UserDTO getUser(Integer id) {
         return userService.findUserById(id);
     }
 
-    public Double shopping(Integer id, Double quantity, Operation operation, String stockSymbol) {
+    public Double shopping(Integer id, Integer quantity, Operation operation, String stockSymbol) {
         UserDTO userDTO = getUser(id);
         PortfolioDTO portfolioDTO = getStockInfo(stockSymbol);
         Double stockPrice = portfolioDTO.getStockCurrentPrice();
@@ -62,9 +68,17 @@ public class Market {
                 if (userDTO.getCash() < calculateStockPrice) {
                     System.out.println("Masz za mało pieniędzy do dokonania tego zakupu");
                 } else {
-                    result = userDTO.getCash() - calculateStockPrice;
-                    portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
-                    return result;
+                    if (checkExistingStockInPortfolio(stockSymbol)) {
+                        Integer numberOfShares = portfolioDTO.getNumberOfShares();
+                        Integer updatedNumberofShares = numberOfShares + quantity;
+                        result = userDTO.getCash() - calculateStockPrice;
+                        portfolioService.updatePortfolio(userDTO.getId(), new UpdatePortfolioDetail(updatedNumberofShares));
+                        return result;
+                    } else {
+                        portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
+                        result = userDTO.getCash() - calculateStockPrice;
+                        return result;
+                    }
                 }
 
         }

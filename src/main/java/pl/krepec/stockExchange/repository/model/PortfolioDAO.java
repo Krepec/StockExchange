@@ -16,7 +16,7 @@ public class PortfolioDAO {
     private String stockSymbol;
 
     @Column(name = "number_of_shares")
-    private Double numberOfShares;
+    private Integer numberOfShares;
 
     @Column(name = "stock_current_price")
     private Double stockCurrentPrice;
@@ -49,11 +49,11 @@ public class PortfolioDAO {
         this.stockSymbol = stockSymbol;
     }
 
-    public Double getNumberOfShares() {
+    public Integer getNumberOfShares() {
         return numberOfShares;
     }
 
-    public void setNumberOfShares(Double numberOfShares) {
+    public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
 
@@ -66,7 +66,7 @@ public class PortfolioDAO {
     }
 
 
-    public PortfolioDAO(Integer id, String stockSymbol, Double numberOfShares, Double stockCurrentPrice, Integer userId) {
+    public PortfolioDAO(Integer id, String stockSymbol, Integer numberOfShares, Double stockCurrentPrice, Integer userId) {
         this.id = id;
         this.stockSymbol = stockSymbol;
         this.numberOfShares = numberOfShares;

@@ -48,7 +48,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     private String updateUserCash(@PathVariable(required = true, value = "id") Integer id,
-                                  @RequestParam(required = true, value = "quantity") Double quantity,
+                                  @RequestParam(required = true, value = "quantity") Integer quantity,
                                   @RequestParam(required = true, value = "operation") Operation operation,
                                   @RequestParam(required = true, value = "stockSymbol") String stockSymbol)
     {
