@@ -10,8 +10,13 @@ import pl.krepec.stockExchange.repository.UserRepository;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService{
 
-    @Autowired
+
     private UserRepository userRepository;
+
+    @Autowired
+    public UserDetailServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

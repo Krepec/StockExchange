@@ -10,8 +10,12 @@ import pl.krepec.stockExchange.service.HistoryService;
 @RequestMapping("/stockexchange/history")
 public class HistoryController {
 
-    @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    public HistoryController(HistoryService historyService){
+        this.historyService = historyService;
+    }
 
     @PostMapping(value = "/history", consumes = "application/json")
     public Integer addHistory(@RequestBody HistoryDTO historyDTO){

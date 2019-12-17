@@ -13,10 +13,12 @@ import java.util.List;
 @RequestMapping("/stockexchange/user")
 public class UserController {
 
-    private Boolean result;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/{id}")
     public UserDTO findUserById(@PathVariable("id") Integer id) {
@@ -51,6 +53,7 @@ public class UserController {
                                   @RequestParam(required = true, value = "quantity") Integer quantity,
                                   @RequestParam(required = true, value = "operation") Operation operation,
                                   @RequestParam(required = true, value = "stockSymbol") String stockSymbol)
+
     {
 
         return userService.updateUserCash(id, quantity, operation, stockSymbol);

@@ -18,7 +18,7 @@ public class Market {
     private UserService userService;
 
     private PortfolioDTO getStockInfo(String stockSymbol) {
-        return portfolioService.getPortfolioInfoFromUrl(stockSymbol);
+        return portfolioService.getPortfolioByStockBySymbol(stockSymbol);
     }
 
     private Double calculate(Double stockPrice, Integer quantity) {
@@ -45,13 +45,52 @@ public class Market {
 
     }
 
-    private Boolean checkExistingStockInPortfolio(String stockSymbol) {
-        PortfolioDTO portfolioDTO = portfolioService.getPortfolioByStockBySymbol(stockSymbol);
-        return portfolioDTO.getStockSymbol().equals(stockSymbol);
+    private Boolean checkExistingStockInPortfolio(Integer id, String stockSymbol) {
+        PortfolioDTO portfolioDTO = portfolioService.getPortfolioByStockBySymbolAndId(stockSymbol, id);
+        return portfolioDTO.getUserId().equals(id) && portfolioDTO.getStockSymbol().equals(stockSymbol);
     }
 
     private UserDTO getUser(Integer id) {
         return userService.findUserById(id);
+    }
+
+
+    public Double zapupy(Integer userId, Integer stockQuantity, Operation operation, String stockSymbol) {
+        UserDTO userDTO = getUser(userId);
+        Double userCash = userDTO.getCash();
+        System.out.println("User name " + userDTO.getUserName() + " user cash " + userDTO.getCash() + " user id " + userDTO.getId());
+
+        PortfolioDTO portfolioDTO = portfolioService.getPortfolioInfoFromUrl(stockSymbol);
+        Double actualStockPrice = portfolioDTO.getStockCurrentPrice();
+        System.out.println("Actula cash for symbol: " + stockSymbol + " is: " + portfolioDTO.getStockCurrentPrice());
+
+        Double actulaStochCash = portfolioDTO.getStockCurrentPrice();
+        System.out.println(actulaStochCash);
+        System.out.println(stockQuantity);
+
+        Double calculateCash = actulaStochCash * stockQuantity;
+        switch (operation) {
+            case BUY:
+                if (calculateCash < userCash) {
+                    System.out.println("Masz za mało pieniędzy do dokonania tego zakupu");
+                } else if (checkExistingStockInPortfolio(userId, stockSymbol)) {
+                    PortfolioDTO portfolioDTOtoUpdate = portfolioService.getPortfolioByStockBySymbolAndId(stockSymbol, userId);
+                    System.out.println("portfolio id:" + portfolioDTO.getId());
+                    Integer numberOfShares = portfolioDTOtoUpdate.getNumberOfShares();
+                    Integer calculatenumberOfShares = numberOfShares + stockQuantity;
+                    portfolioService.updatePortfolio(portfolioDTOtoUpdate.getId(), new UpdatePortfolioDetail(calculatenumberOfShares));
+                    return userCash - calculateCash;
+                } else {
+                    portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, stockQuantity, actualStockPrice, userId));
+
+                }
+            case SELL:
+
+                return userCash - calculateCash;
+        }
+
+        return userCash;
+
     }
 
     public Double shopping(Integer id, Integer quantity, Operation operation, String stockSymbol) {
@@ -68,11 +107,13 @@ public class Market {
                 if (userDTO.getCash() < calculateStockPrice) {
                     System.out.println("Masz za mało pieniędzy do dokonania tego zakupu");
                 } else {
-                    if (checkExistingStockInPortfolio(stockSymbol)) {
+                    if (checkExistingStockInPortfolio(id, stockSymbol)) {
                         Integer numberOfShares = portfolioDTO.getNumberOfShares();
+                        System.out.println(numberOfShares);
                         Integer updatedNumberofShares = numberOfShares + quantity;
-                        result = userDTO.getCash() - calculateStockPrice;
+                        System.out.println("nuer sharsow" + updatedNumberofShares);
                         portfolioService.updatePortfolio(userDTO.getId(), new UpdatePortfolioDetail(updatedNumberofShares));
+                        result = userDTO.getCash() - calculateStockPrice;
                         return result;
                     } else {
                         portfolioService.addPortfolio(new PortfolioDTO(null, stockSymbol, quantity, stockPrice, id));
@@ -85,4 +126,8 @@ public class Market {
 
         return result = userDTO.getCash();
     }
+
+
 }
+
+

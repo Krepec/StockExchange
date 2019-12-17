@@ -11,18 +11,22 @@ import pl.krepec.stockExchange.repository.requests.UpdatePortfolioDetail;
 @Service
 public class PortfolioService {
 
-    @Autowired
     private PortfolioRepository portfolioRepository;
-    @Autowired
     private Json json;
 
+    @Autowired
+    public PortfolioService(PortfolioRepository portfolioRepository, Json json) {
+        this.portfolioRepository = portfolioRepository;
+        this.json = json;
+    }
 
     private PortfolioDTO mapPortfolio(PortfolioDAO portfolioDAO) {
         return new PortfolioDTO(portfolioDAO.getId(), portfolioDAO.getStockSymbol(), portfolioDAO.getNumberOfShares(), portfolioDAO.getStockCurrentPrice(),portfolioDAO.getUserId());
     }
 
     public PortfolioDTO getPortfolioInfoFromUrl(String stockSymbol) {
-        String url = "https://cloud.iexapis.com/stable/tops?token=pk_c929ec1a991e4b5fb83d4d41233ef431&symbols="+stockSymbol;
+      //  String url = "https://cloud.iexapis.com/latest/tops?token=pk_a3e7dd6ef6be498583b1da342ebb6901&symbols="+stockSymbol;
+        String url = "https://sandbox.iexapis.com/stable/stock/market/batch?symbols="+stockSymbol+"&types=quote&token=Tsk_7b87800c054143e3a8cd563853686bce";
         String jsonString = json.readUrl(url);
 
         return json.parseJson(jsonString);
@@ -44,9 +48,15 @@ public class PortfolioService {
         return mapPortfolio(portfolioDAO);
     }
 
+    public PortfolioDTO getPortfolioByStockBySymbolAndId(String stockSymbol, Integer id) {
+        PortfolioDAO portfolioDAO = portfolioRepository.findByStockSymbolAndUserId(stockSymbol, id);
+        return mapPortfolio(portfolioDAO);
+    }
+
     public String updatePortfolio(Integer id, UpdatePortfolioDetail updatePortfolioDetail) {
         PortfolioDAO portfolioDAO = portfolioRepository.findOne(id);
         portfolioDAO.setNumberOfShares(updatePortfolioDetail.getNumberOfShares());
+        System.out.println(portfolioDAO);
         portfolioRepository.save(portfolioDAO);
         return "Portfolio updated! Number of shares: " + portfolioDAO.getNumberOfShares();
 

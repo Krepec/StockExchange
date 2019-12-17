@@ -10,26 +10,37 @@ import pl.krepec.stockExchange.service.PortfolioService;
 @RequestMapping("/stockexchange/portfolio")
 public class PortfolioController {
 
-    @Autowired
+
     private PortfolioService portfolioService;
 
+    @Autowired
+    public PortfolioController(PortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
+    }
+
     @GetMapping("/stockinfo/{symbol}")
-    public PortfolioDTO getStockInfoFromURL(@PathVariable("symbol") String stockSymbol){
+    public PortfolioDTO getStockInfoFromURL(@PathVariable("symbol") String stockSymbol) {
         return portfolioService.getPortfolioInfoFromUrl(stockSymbol);
     }
 
     @GetMapping("/stockinfo/")
-    public PortfolioDTO getPortfolioStockBySymbol(@RequestParam(value = "symbol") String stockSymbol){
+    public PortfolioDTO getPortfolioStockBySymbol(@RequestParam(value = "symbol") String stockSymbol) {
         return portfolioService.getPortfolioByStockBySymbol(stockSymbol);
     }
 
     @GetMapping("/{id}")
-    public PortfolioDTO fingById(@PathVariable("id") Integer id){
-        return  portfolioService.findById(id);
+    public PortfolioDTO fingById(@PathVariable("id") Integer id) {
+        return portfolioService.findById(id);
+    }
+
+    @GetMapping("/stockinfo/s/")
+    public PortfolioDTO getPortfolioStockBySymbolAndId(@RequestParam(value = "symbol") String stockSymbol,
+                                                       @RequestParam(value = "userid") Integer userId) {
+        return portfolioService.getPortfolioByStockBySymbolAndId(stockSymbol, userId);
     }
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public Integer addPortfolio(@RequestBody PortfolioDTO portfolioDTO){
+    public Integer addPortfolio(@RequestBody PortfolioDTO portfolioDTO) {
         return portfolioService.addPortfolio(portfolioDTO);
     }
 
@@ -40,4 +51,6 @@ public class PortfolioController {
         return portfolioService.updatePortfolio(id, updatePortfolioDetail);
 
     }
+
+
 }

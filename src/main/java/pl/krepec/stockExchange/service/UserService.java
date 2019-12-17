@@ -13,10 +13,14 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private Market market;
+
+    @Autowired
+    public UserService(UserRepository userRepository, Market market) {
+        this.userRepository = userRepository;
+        this.market = market;
+    }
 
     private UserDTO mapUser(UserDAO userDAO) {
         return new UserDTO(userDAO.getId(), userDAO.getUserName(), userDAO.getPassword(), userDAO.getCash(), userDAO.getRole());
@@ -54,7 +58,7 @@ public class UserService {
 
     public String updateUserCash(Integer id, Integer quantity, Operation operation, String stockSymbol) {
         UserDAO userDAO = userRepository.findOne(id);
-        Double cashAfterShopping = market.shopping(id, quantity, operation, stockSymbol);
+        Double cashAfterShopping = market.zapupy(id, quantity, operation, stockSymbol);
         userDAO.setCash(cashAfterShopping);
         UserDAO userDAOcashAfterShopping = userRepository.save(userDAO);
         return "Actual cash is: " + userDAOcashAfterShopping.getCash();

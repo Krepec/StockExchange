@@ -11,8 +11,13 @@ import java.util.Date;
 @Service
 public class HistoryService {
 
-    @Autowired
+
     private HistoryRepository historyRepository;
+
+    @Autowired
+    public HistoryService(HistoryRepository historyRepository) {
+        this.historyRepository = historyRepository;
+    }
 
     private HistoryDAO mapHistory(HistoryDTO historyDTO){
         return new HistoryDAO(historyDTO.getId(),historyDTO.getOperation(),historyDTO.getStock_symbol(),historyDTO.getStock_price(), new Date());

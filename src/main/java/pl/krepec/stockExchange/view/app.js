@@ -12,7 +12,7 @@ function readJSON(){
     
     stockSymbol = document.getElementById("stockSymbol").value;
 
-    xhr.open('GET', "https://cloud.iexapis.com/stable/tops?token=pk_c929ec1a991e4b5fb83d4d41233ef431&symbols="+stockSymbol, true);
+    xhr.open('GET', "https://cloud.iexapis.com/stable/tops?token=pk_a3e7dd6ef6be498583b1da342ebb6901&symbols="+stockSymbol, true);
 
     xhr.onload = function(){
         if(this.status === 200){
